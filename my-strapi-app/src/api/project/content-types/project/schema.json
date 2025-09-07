@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "ProjectBackgroundMotivation": {
+      "type": "text"
+    },
+    "Objective": {
+      "type": "text"
+    },
+    "MethodologyWorkingPrinciple": {
+      "type": "text"
+    },
+    "ToolsAndTechnologiesUsed": {
+      "type": "text"
+    },
+    "ModelAndCircuitDiagram": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "ProgramCode": {
+      "type": "richtext"
+    },
+    "ResultsOutcomeAchievements": {
+      "type": "text"
+    },
+    "ChallengesFaced": {
+      "type": "text"
+    },
+    "FinishedImage": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "DateofFinish": {
+      "type": "date"
+    }
+  }
+}

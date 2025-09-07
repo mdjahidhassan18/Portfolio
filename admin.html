@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+  <main class="about">
+    <h1>Admin Page</h1>
+
+
+  <section>
+    <h2>Add Experience</h2>
+    <button onclick="addExperience()">Add</button>
+  </section>
+
+  <section>
+    <h2>Add Project</h2>
+    <button onclick="addProject()">Add</button>
+  </section>
+
+  <script src="script.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (sessionStorage.getItem("isLoggedIn") !== "true") {
+      alert("You must log in first!");
+      window.location.href = "login.html";
+    }
+  });
+</script>
+
+</main>
+</body>
+</html>

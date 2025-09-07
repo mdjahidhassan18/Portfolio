@@ -1,0 +1,35 @@
+
+/* Carousel Section Styling */
+.carousel-section {
+    margin-top: 80px;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1f242d; /* Match theme */
+}
+
+/* Carousel container */
+#myCarousel {
+    width: 100vw; /* Full viewport width */
+    height: 400px; /* Fixed height */
+    overflow: hidden;
+}
+
+/* Carousel images */
+.carousel-inner img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover; /* Ensures proper image scaling */
+}
+
+/* Responsive fix */
+@media (max-width: 768px) {
+    #myCarousel {
+        height: 300px;
+    }
+
+    .carousel-inner img {
+        height: 300px;
+    }
+}

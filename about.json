@@ -1,0 +1,18 @@
+{
+  "bio": "Highly motivated and results-oriented Mechanical Engineering student passionate about automation and robotics.",
+  "education": "Bachelor of Science in Mechanical Engineering, Chittagong University of Engineering & Technology (CUET).",
+  "skills": [
+    "3D Modeling",
+    "Project Management",
+    "Python",
+    "C Programming",
+    "Arduino Projects",
+    "PLCs",
+    "Internet of Things (IoT)"
+  ],
+  "experience": "Hands-on experience with Arduino projects, PLCs, and IoT utilizing platforms like Blynk and ESP32.",
+  "publications": [
+    "Conference Paper: Sustainable Propulsion Technology using Electrohydrodynamic (EHD) Systems — Highlights the importance of EHD in sustainable transport.",
+    "Conference Paper: Solar-Assisted Pyrolysis Reactor — Focuses on fabricating a reactor using concentrated solar energy."
+  ]
+}
