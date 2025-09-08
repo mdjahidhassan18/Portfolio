@@ -10,154 +10,156 @@ if (window.location.pathname.includes("index.html")) {
   });
 }
 
-/* -------------------- 2. About Section -------------------- */
+/* -------------------- 2. About Section (Education, Experience, Skills, Projects from Strapi) -------------------- */
+/* -------------------- Education -------------------- */
 if (window.location.pathname.includes("about.html")) {
-  fetch("about.json")
-    .then(response => response.json())
+  // Fetch Education
+  fetch("http://localhost:1337/api/educations")
+    .then(res => res.json())
     .then(data => {
-      // Bio
-      document.getElementById("about-bio").innerHTML = `<p>${data.bio}</p>`;
+      const container = document.querySelector("#education");
 
-      // Education
-      document.getElementById("about-education").innerHTML = `<p>${data.education}</p>`;
+      // Format date function
+      const formatDate = (dateStr, isEnd = false) => {
+        if (!dateStr && isEnd) return "Present";
+        if (!dateStr) return "";
+        const date = new Date(dateStr);
+        return date.toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric"
+        });
+      };
 
-      // Skills
-      document.getElementById("about-skills").innerHTML =
-        data.skills.map(skill => `<li>${skill}</li>`).join("");
+      // Sort by EndDate (most recent first)
+      const sorted = data.data.sort((a, b) => {
+        const endA = a.EndDate ? new Date(a.EndDate) : new Date(); // if null, treat as ongoing
+        const endB = b.EndDate ? new Date(b.EndDate) : new Date();
+        return endB - endA; // descending
+      });
 
-      // Experience
-      document.getElementById("about-experience").innerHTML = `<p>${data.experience}</p>`;
-
-      // Publications
-      document.getElementById("about-publications").innerHTML =
-        data.publications.map(pub => `<li>${pub}</li>`).join("");
+      // Render HTML
+      container.innerHTML = sorted.map(item => {
+        const edu = item;
+        return `
+          <div class="education-item">
+            <p>${edu.InstitutionName}</p>
+            <p><strong>Degree/Certificate : </strong> ${edu.Degree}</p>
+            <p><strong>Field of Study:</strong> ${edu.FieldofStudy}</p>
+            <p><strong>Duration:</strong> ${formatDate(edu.StartDate)} to ${formatDate(edu.EndDate, true)}</p>
+            <p><strong>Location:</strong> ${edu.location}</p>
+          </div>
+        `;
+      }).join("");
     })
-    .catch(error => console.error("Error loading about.json:", error));
+    .catch(err => console.error("Error fetching education:", err));
 }
+
+/* -------------------- Experiences -------------------- */
+if (window.location.pathname.includes("about.html")) {
+  // Fetch Experience
+  fetch("http://localhost:1337/api/experiences")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.querySelector("#about-experience");
+
+      // Format date function
+      const formatDate = (dateStr, isEnd = false) => {
+        if (!dateStr && isEnd) return "Present";
+        if (!dateStr) return "";
+        const date = new Date(dateStr);
+        return date.toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric"
+        });
+      };
+
+      // Duration calculator (years & months)
+      const getDuration = (start, end) => {
+        if (!start) return "";
+        const startDate = new Date(start);
+        const endDate = end ? new Date(end) : new Date(); // if null, ongoing
+
+        let years = endDate.getFullYear() - startDate.getFullYear();
+        let months = endDate.getMonth() - startDate.getMonth();
+
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+
+        let result = "";
+        if (years > 0) result += `${years} year${years > 1 ? "s" : ""} `;
+        if (months > 0) result += `${months} month${months > 1 ? "s" : ""}`;
+        return result.trim();
+      };
+
+      // Sort by EndDate (most recent first)
+      const sorted = data.data.sort((a, b) => {
+        const endA = a.endDate ? new Date(a.endDate) : new Date();
+        const endB = b.endDate ? new Date(b.endDate) : new Date();
+        return endB - endA;
+      });
+
+      // Render HTML
+      container.innerHTML = sorted.map(item => {
+        const exp = item;
+        return `
+          <div class="experience-item">
+            <p class="company-name">${exp.company}</p>
+            <p><strong>Position:</strong> ${exp.title}</p>
+            <p><strong>Duration:</strong> ${formatDate(exp.startDate)} to ${formatDate(exp.endDate, true)} 
+              <em>(${getDuration(exp.startDate, exp.endDate)})</em>
+            </p>
+            <p><strong>Location:</strong> ${exp.location}</p>
+            <p><strong>Description:</strong> ${exp.description}</p>
+            <p><strong>Website: </strong>${exp.WebSite}</p>
+          </div>
+        `;
+      }).join("");
+    })
+    .catch(err => console.error("Error fetching experiences:", err));
+}
+
 
 /* -------------------- 3. Projects Section -------------------- */
 if (window.location.pathname.includes("projects.html")) {
-  fetch("projects.json")
-    .then(response => response.json())
-    .then(projects => {
-      const container = document.querySelector(".projects-grid");
-      container.innerHTML = projects.map(project => `
-        <div class="project-item">
-          <h2>${project.title}</h2>
-          <p>${project.description}</p>
-          <a href="${project.link}" class="btn" target="_blank">View Project</a>
-        </div>
-      `).join("");
+  fetch("http://localhost:1337/api/projects")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.querySelector("#projects-container");
+
+      container.innerHTML = data.data.map(item => {
+        const project = item;
+
+        return `
+          <div class="project-item">
+            <h2>${project.Name}</h2>
+            <p><strong>Finished:</strong> ${new Date(project.DateofFinish).toLocaleDateString("en-GB")}</p>
+            <button class="btn view-details">View Details</button>
+            
+            <div class="project-details hidden">
+              <p><strong>Objective:</strong> ${project.Objective}</p>
+              <p><strong>Background:</strong> ${project.ProjectBackgroundMotivation}</p>
+              <p><strong>Tools & Tech:</strong> ${project.ToolsAndTechnologiesUsed}</p>
+              <p><strong>Achievements:</strong> ${project.ResultsOutcomeAchievements}</p>
+              <p><strong>Challenges:</strong> ${project.ChallengesFaced}</p>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // Toggle details on button click
+      document.querySelectorAll(".view-details").forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+          const details = btn.nextElementSibling;
+          details.classList.toggle("hidden");
+          btn.textContent = details.classList.contains("hidden")
+            ? "View Details"
+            : "Hide Details";
+        });
+      });
     })
-    .catch(error => console.error("Error loading projects.json:", error));
-}
-
-
-
-/* -------------------- Redirect Login to Admin Panel -------------------- */
-document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.getElementById("loginForm");
-
-  if (loginForm) {
-    loginForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      // Demo login (replace with your own email/password)
-      if (email === "admin@example.com" && password === "1234") {
-        sessionStorage.setItem("isLoggedIn", "true");
-        window.location.href = "admin.html"; 
-      } else {
-        alert("Invalid credentials!");
-      }
-    });
-  }
-});
-
-
-
-/* -------------------- Save Data to LocalStorage -------------------- */
-
-function addExperience() {
-  let exp = document.getElementById("exp-input").value;
-  if (exp) {
-    let exps = JSON.parse(localStorage.getItem("experience")) || [];
-    exps.push(exp);
-    localStorage.setItem("experience", JSON.stringify(exps));
-    alert("Experience added!");
-  }
-}
-
-function addProject() {
-  let title = document.getElementById("proj-title").value;
-  let desc = document.getElementById("proj-desc").value;
-  if (title && desc) {
-    let projects = JSON.parse(localStorage.getItem("projects")) || [];
-    projects.push({ title, desc });
-    localStorage.setItem("projects", JSON.stringify(projects));
-    alert("Project added!");
-  }
-}
-
-
-/* -------------------- Load Data into About Page -------------------- */
-document.addEventListener("DOMContentLoaded", () => {
-  // Load Education
-  let educations = JSON.parse(localStorage.getItem("education")) || [];
-  let eduDiv = document.getElementById("education");
-  educations.forEach(e => {
-    let p = document.createElement("p");
-    p.textContent = e;
-    eduDiv.appendChild(p);
-  });
-
-  // Load Skills
-  let skills = JSON.parse(localStorage.getItem("skills")) || [];
-  let skillsUl = document.getElementById("skills");
-  skills.forEach(s => {
-    let li = document.createElement("li");
-    li.textContent = s;
-    skillsUl.appendChild(li);
-  });
-
-  // Load Experience
-  let experiences = JSON.parse(localStorage.getItem("experience")) || [];
-  let expDiv = document.getElementById("about-experience");
-  experiences.forEach(ex => {
-    let p = document.createElement("p");
-    p.textContent = ex;
-    expDiv.appendChild(p);
-  });
-
-  // Load Projects
-  let projects = JSON.parse(localStorage.getItem("projects")) || [];
-  let projDiv = document.getElementById("about-publications");
-  projects.forEach(proj => {
-    let li = document.createElement("li");
-    li.textContent = proj.title + " - " + proj.desc;
-    projDiv.appendChild(li);
-  });
-});
-
-
-
-//logs
-
-if (loginForm) {
-  loginForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    console.log("Login form submitted ✅");
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    if (email === "admin@example.com" && password === "1234") {
-      localStorage.setItem("isLoggedIn", "true");
-      window.location.href = "admin.html"; 
-    } else {
-      alert("Invalid credentials!");
-    }
-  });
+    .catch(err => console.error("Error fetching projects:", err));
 }

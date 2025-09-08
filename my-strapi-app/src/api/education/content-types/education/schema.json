@@ -28,9 +28,6 @@
     },
     "location": {
       "type": "string"
-    },
-    "Current": {
-      "type": "boolean"
     }
   }
 }

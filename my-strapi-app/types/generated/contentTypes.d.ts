@@ -387,7 +387,6 @@ export interface ApiEducationEducation extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Current: Schema.Attribute.Boolean;
     Degree: Schema.Attribute.String;
     EndDate: Schema.Attribute.Date;
     FieldofStudy: Schema.Attribute.String;
@@ -422,7 +421,6 @@ export interface ApiExperienceExperience extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Current: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     description: Schema.Attribute.Text;
     endDate: Schema.Attribute.Date;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -438,6 +436,7 @@ export interface ApiExperienceExperience extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    WebSite: Schema.Attribute.String;
   };
 }
 

@@ -29,9 +29,8 @@
     "description": {
       "type": "text"
     },
-    "Current": {
-      "type": "boolean",
-      "default": true
+    "WebSite": {
+      "type": "string"
     }
   }
 }
