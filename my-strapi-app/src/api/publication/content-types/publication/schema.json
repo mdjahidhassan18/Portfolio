@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "publications",
+  "info": {
+    "singularName": "publication",
+    "pluralName": "publications",
+    "displayName": "publication"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "text"
+    },
+    "journalORconference": {
+      "type": "text"
+    },
+    "PublishedDate": {
+      "type": "date"
+    },
+    "coauthor": {
+      "type": "text"
+    },
+    "reference": {
+      "type": "text"
+    }
+  }
+}

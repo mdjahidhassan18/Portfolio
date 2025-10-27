@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project Details</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="logo.ico"> s
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="header">
     <a href="index.html" class="logo">Portfolio</a>
     <nav class="navbar">
-      <a href="index.html">HOME</a>
-      <a href="about.html">ABOUT</a>
-      <a href="projects.html" class="active">PROJECTS</a>
-      <a href="others.html">OTHERS</a>
+      <a href="index.html" style="--i:1;">HOME</a>
+      <a href="about.html" style="--i:2;">ABOUT</a>
+      <a href="projects.html" style="--i:3;" class="active">PROJECTS</a>
+      <a href="others.html" style="--i:4;">OTHERS</a> 
     </nav>
   </header>
 
-  <!-- Project Details Section -->
   <section class="project-details" id="project-details">
     <h1>Loading...</h1>
   </section>
@@ -26,32 +26,7 @@
     <p>© 2025 <span>Md Jahid Hassan</span>. All Rights Reserved.</p>
   </footer>
 
-  <script>
-    // Extract ID from URL
-    const params = new URLSearchParams(window.location.search);
-    const projectId = params.get("id");
-
-    if (projectId) {
-      fetch(`http://localhost:1337/api/projects/${projectId}`)
-        .then(res => res.json())
-        .then(data => {
-          const proj = data.data.attributes;
-
-          document.getElementById("project-details").innerHTML = `
-            <h1>${proj.name}</h1>
-            <p><strong>Finished:</strong> ${new Date(proj.finishedDate).toLocaleDateString()}</p>
-            <p><strong>Description:</strong> ${proj.description}</p>
-            <p><strong>Technologies:</strong> ${proj.technologies || "N/A"}</p>
-            <p><strong>GitHub:</strong> <a href="${proj.github}" target="_blank">View Code</a></p>
-            <p><strong>Live Demo:</strong> <a href="${proj.demo}" target="_blank">Visit Site</a></p>
-            <a href="projects.html" class="btn">← Back to Projects</a>
-          `;
-        })
-        .catch(err => {
-          document.getElementById("project-details").innerHTML = "<p>Error loading project details.</p>";
-          console.error(err);
-        });
-    }
-  </script>
+  <!-- External JS file -->
+  <script src="script.js"></script>
 </body>
 </html>
